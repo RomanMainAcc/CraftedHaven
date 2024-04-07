@@ -81,17 +81,17 @@
             <div class="custom-shadow d-flex">
 
                 <li class="page-item {% if not goods.has_previous %}disabled{% endif %}">
-                  <a class="page-link" href="{% if goods.has_previous %}{% url 'goods:index' category_slug=slug page_number=goods.previous_page_number %}{% else %}#{% endif %}">Previous</a>
+                  <a class="page-link" href="{% if goods.has_previous %}?page_number={{ goods.previous_page_number }}{% else %}#{% endif %}">Previous</a>
                 </li>
 
                 {% for page_number in goods.paginator.page_range%}
                 {% if page_number >=  goods.number|add:-2 and page_number <= goods.number|add:2 %}
-                  <li class="page-item {% if goods.number == page_number %} active {% endif %}"><a class="page-link" href="{% url 'goods:index' slug page_number %}">{{ page_number }}</a></li>
+                  <li class="page-item {% if goods.number == page_number %} active {% endif %}"><a class="page-link" href="?page_number={{ page_number }}">{{ page_number }}</a></li>
                 {% endif %}
                 {% endfor %}
 
                 <li class="page-item {% if not goods.has_next %}disabled{% endif %}">
-                  <a class="page-link" href="{% if goods.has_next %}{% url 'goods:index' category_slug=slug page_number=goods.next_page_number %}{% else %}#{% endif %}">Next</a>
+                  <a class="page-link" href="{% if goods.has_next %}?page_number={{ goods.next_page_number }}{% else %}#{% endif %}">Next</a>
                 </li>
             </div>
         </ul>
