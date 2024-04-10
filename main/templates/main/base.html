@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href={% static "deps/css/bootstrap/bootstrap.min.css" %}>
     <link rel="stylesheet" href={% static "deps/css/my_css.css" %}>
-    <!-- Стиль footer-a для главной страницы -->
+    <!-- Footer style for the main page -->
     {% block css %}
     {% endblock %}
     <!-- Favicons for different platforms -->
@@ -36,40 +36,40 @@
                         <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Информация
+                                Information
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item  text-white" href="#">Доставка и оплата</a></li>
-                                <li><a class="dropdown-item  text-white" href="#">Контактная информация</a></li>
-                                <li><a class="dropdown-item  text-white" href="{% url "main:about" %}">Про нас</a></li>
+                                <li><a class="dropdown-item  text-white" href="#">Delivery and Payment</a></li>
+                                <li><a class="dropdown-item  text-white" href="#">Contact Information</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url "main:about" %}">About Us</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  text-white" href="carts/cart.html">Корзина</a>
+                            <a class="nav-link  text-white" href="carts/cart.html">Cart</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  text-white" href="users/login.html">Войти</a>
+                            <a class="nav-link  text-white" href="users/login.html">Login</a>
                         </li>
                         <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle text-white" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Мой профиль
+                                My Profile
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
-                                <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a>
+                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Cart</a></li>
+                                <li><a class="dropdown-item  text-white" href="users/profile.html">Profile</a>
                                 </li>
-                                <li><a class="dropdown-item  text-white" href="{% url "admin:index" %}">Админ панель</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url "admin:index" %}">Admin Panel</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item  text-white" href="#">Выйти</a></li>
+                                <li><a class="dropdown-item  text-white" href="#">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
+                    <form class="d-flex" role="search" action="{% url "catalog:search" %}" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success text-white" type="submit">Search</button>
                     </form>
                 </div>
             </div>
@@ -77,13 +77,13 @@
     </header>
     <section>
         <div class="container">
-            <!-- Каталог и корзина с фиксированным расположением на странице -->
+            <!-- Catalog and Cart with fixed position on the page -->
             <div class="row mt-1 position-fixed z-3">
-                <!-- Каталог -->
+                <!-- Catalog -->
                 <div class="dropdown mb-2">
                     <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        Каталог
+                        Catalog
                         <img class="mx-1" src="{% static "deps/icons/grid-fill.svg" %}" alt="Catalog Icon" width="16"
                              height="16">
                     </button>
@@ -94,7 +94,7 @@
                       {% endfor %}
                     </ul>
                 </div>
-                <!-- Значек корзины, вызывает модальное окно -->
+                <!-- Cart icon, triggers modal window -->
                 <div>
                     <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
                         aria-expanded="false">
@@ -103,7 +103,7 @@
                         <span id="goods-in-cart-count">0</span>
                     </button>
                 </div>
-                <!-- Разметка модального окна корзины -->
+                <!-- Modal window markup for the cart -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
@@ -113,12 +113,12 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <h3 class="text-center mb-4">Корзина</h3>
+                                <h3 class="text-center mb-4">Cart</h3>
                                 <div class="container" id="cart-items-container">
-                                    <!-- Разметка корзины -->
+                                    <!-- Cart markup -->
                                     <div class="card mb-3 text-bg-light shadow-lg">
                                         <div class="card-header">
-                                            <h5 class="card-title">Товар</h5>
+                                            <h5 class="card-title">Product</h5>
                                         </div>
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item">
@@ -153,30 +153,30 @@
                                     </div>
                                     <div class="card mb-3 shadow-lg">
                                         <div class="card-footer">
-                                            <p class="float-left">Итого <strong>1</strong> товар(а) на сумму</p>
+                                            <p class="float-left">Total <strong>1</strong> item(s) for amount</p>
                                             <h4 class="float-left"><strong>100.00 $</strong></h4>
                                         </div>
                                     </div>
-                                    <!-- Закончилась разметка корзины -->
+                                    <!-- End of cart markup -->
                                 </div>
                                 <a class="btn btn-dark" href="orders/create_order.html">
-                                    Оформить заказ
+                                    Checkout
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Закончилась разметка модального окна -->
+                <!-- End of modal window markup -->
             </div>
         </div>
-        <!-- Контент -->
+        <!-- Content -->
         <div class="container">
             <div class="row mt-1">
                 <div class="col-lg-2">
-                    <!-- Пустой блок на Ваше усмотрение -->
+                    <!-- Empty block for your discretion -->
                 </div>
                 <div class="col-lg-10">
-                    <!-- Контент на странице -->
+                    <!-- Page content -->
                     {% block content %}
                     {% endblock %}
                 </div>
