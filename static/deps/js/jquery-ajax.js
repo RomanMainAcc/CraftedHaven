@@ -1,5 +1,6 @@
 // Когда html документ готов (прорисован)
 $(document).ready(function () {
+    // console.log("Мій JavaScript код працює!");
     // берем в переменную элемент разметки с id jq-notification для оповещений от ajax
     var successMessage = $("#jq-notification");
 
@@ -105,14 +106,14 @@ $(document).ready(function () {
 
 
 
-    // // Теперь + - количества товара 
+    // // Теперь + - количества товара
     // // Обработчик события для уменьшения значения
     // $(document).on("click", ".decrement", function () {
     //     // Берем ссылку на контроллер django из атрибута data-cart-change-url
     //     var url = $(this).data("cart-change-url");
     //     // Берем id корзины из атрибута data-cart-id
     //     var cartID = $(this).data("cart-id");
-    //     // Ищем ближайшеий input с количеством 
+    //     // Ищем ближайшеий input с количеством
     //     var $input = $(this).closest('.input-group').find('.number');
     //     // Берем значение количества товара
     //     var currentValue = parseInt($input.val());
@@ -131,7 +132,7 @@ $(document).ready(function () {
     //     var url = $(this).data("cart-change-url");
     //     // Берем id корзины из атрибута data-cart-id
     //     var cartID = $(this).data("cart-id");
-    //     // Ищем ближайшеий input с количеством 
+    //     // Ищем ближайшеий input с количеством
     //     var $input = $(this).closest('.input-group').find('.number');
     //     // Берем значение количества товара
     //     var currentValue = parseInt($input.val());
@@ -178,4 +179,36 @@ $(document).ready(function () {
     //         },
     //     });
     // }
+    // Берем из разметки элемент по id - оповещения от django
+    var notification = $('#notification');
+    // И через 7 сек. убираем
+    if (notification.length > 0) {
+        setTimeout(function () {
+            notification.alert('close');
+        }, 7000);
+    }
+
+    // При клике по значку корзины открываем всплывающее(модальное) окно
+    $('#modalButton').click(function () {
+        $('#exampleModal').appendTo('body');
+
+        $('#exampleModal').modal('show');
+    });
+
+    // Собыите клик по кнопке закрыть окна корзины
+    $('#exampleModal .btn-close').click(function () {
+        $('#exampleModal').modal('hide');
+    });
+
+    // Обработчик события радиокнопки выбора способа доставки
+    $("input[name='requires_delivery']").change(function() {
+        var selectedValue = $(this).val();
+        // Скрываем или отображаем input ввода адреса доставки
+        if (selectedValue === "1") {
+            $("#deliveryAddressField").show();
+        } else {
+            $("#deliveryAddressField").hide();
+        }
+    });
+
 });

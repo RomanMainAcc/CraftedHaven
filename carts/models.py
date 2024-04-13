@@ -1,16 +1,17 @@
 from django.db import models
-
 from goods.models import Products
+
 from users.models import User
 
 
-class CartQuerySet(models.QuerySet):
+class CartQueryset(models.QuerySet):
+
     def total_price(self):
-        return sum(cart.products_price() for cart in self.all())
+        return sum(cart.products_price() for cart in self)
 
     def total_quantity(self):
         if self:
-            sum(cart.quantity for cart in self.all())
+            return sum(cart.quantity for cart in self)
         return 0
 
 
@@ -21,7 +22,7 @@ class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     session_key = models.CharField(max_length=32, blank=True, null=True)
 
-    objects = CartQuerySet().as_manager()
+    objects = CartQueryset().as_manager()
 
     def products_price(self):
         return round(self.product.sell_price() * self.quantity, 2)
