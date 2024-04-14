@@ -26,6 +26,10 @@
                     <!-- Разметка корзины -->
                     {% include "carts/includes/included_cart.html" %}
                     <!-- Закончилась разметка корзины -->
+
+{#                  {% if carts %}#}
+{#                    <a class="btn btn-dark " href="{% url "orders:create_order" %}">Checkout</a>#}
+{#                  {% endif %}#}
                 </div>
             </div>
         </div>
