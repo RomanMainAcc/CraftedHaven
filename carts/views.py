@@ -28,18 +28,49 @@ def cart_add(request):
         "carts/includes/included_cart.html", {"carts": user_cart}, request=request)
 
     response_data = {
-        "message": "Товар добавлен в корзину",
+        "message": "The product has been added",
         "cart_items_html": cart_items_html,
     }
 
     return JsonResponse(response_data)
 
 
-def cart_change(request, product_slug):
-    ...
+def cart_change(request):
+    cart_id = request.POST.get("cart_id")
+    quantity = request.POST.get("quantity")
+
+    cart = Cart.objects.get(id=cart_id)
+    cart.quantity = quantity
+    cart.save()
+
+    user_cart = get_user_carts(request)
+    cart_items_html = render_to_string(
+        "carts/includes/included_cart.html", {"carts": user_cart}, request=request)
+
+    response_data = {
+        "message": "The quantity of goods has been changed",
+        "cart_items_html": cart_items_html,
+        "quantity": quantity,
+    }
+
+    return JsonResponse(response_data)
 
 
-def cart_remove(request, cart_id):
-    cart = Cart.objects.get(pk=cart_id)
+def cart_remove(request):
+    cart_id = request.POST.get("cart_id")
+
+    cart = Cart.objects.get(id=cart_id)
+    quantity = cart.quantity
     cart.delete()
-    return redirect(request.META['HTTP_REFERER'])
+
+    user_cart = get_user_carts(request)
+    cart_items_html = render_to_string(
+        "carts/includes/included_cart.html", {"carts": user_cart}, request=request)
+
+    response_data = {
+        "message": "The product has been removed",
+        "cart_items_html": cart_items_html,
+        "quantity_deleted": quantity,
+    }
+
+    return JsonResponse(response_data)
