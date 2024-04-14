@@ -73,7 +73,7 @@ def profile(request):
         form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Профайл успешно обновлен")
+            messages.success(request, "Profile successfully updated")
             return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = ProfileForm(instance=request.user)
@@ -86,7 +86,7 @@ def profile(request):
     ).order_by("-id")
 
     context = {
-        'title': 'Home - Кабинет',
+        'title': 'CraftedHaven - Cabinet',
         'form': form,
         'orders': orders,
     }
