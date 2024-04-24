@@ -17,16 +17,26 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from CraftedHaven import settings
+from api.views import CategoryViewSet, ProductsViewSet
+
+router = DefaultRouter()
+router.register(r'category', CategoryViewSet)
+router.register(r'products', ProductsViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
     path('', include("main.urls", namespace="main")),
     path('catalog/', include("goods.urls", namespace="catalog")),
     path('user/', include("users.urls", namespace="user")),
     path('cart/', include("carts.urls", namespace="cart")),
     path('orders/', include("orders.urls", namespace="orders")),
+
+    # path('api/docs/', include_docs_urls(title='Your API Documentation'))
 
 
 ]
