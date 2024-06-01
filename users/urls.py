@@ -5,9 +5,9 @@ from users.views import *
 app_name = 'users'
 
 urlpatterns = [
-    path('login', login, name='login'),
-    path('registration/', registration, name='registration'),
-    path('profile/', profile, name='profile'),
-    path('users-cart/', users_cart, name='users_cart'),
-    path('logout/', logout, name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('registration/', RegistrationView.as_view(), name='registration'),
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('users-cart/', UsersCartView.as_view(), name='users_cart'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]

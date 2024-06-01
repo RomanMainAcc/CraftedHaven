@@ -1,19 +1,23 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
 
-def index(request):
+class IndexView(TemplateView):
+    template_name = 'main/index.html'
 
-    context = {
-        "title": "CraftedHaven - home page",
-        "content": "Furniture store CraftedHaven",
-    }
-    return render(request, 'main/index.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "CraftedHaven - home page"
+        context['content'] = "Furniture store CraftedHaven"
+        return context
 
 
-def about(request):
-    context = {
-        "title": "CraftedHaven - about us",
-        "content": "About us",
-        "text_on_page": "Our furniture is made using the finest materials and meets the highest quality standards."
-    }
-    return render(request, 'main/about.html', context)
+class AboutView(TemplateView):
+    template_name = 'main/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "CraftedHaven - about us"
+        context['content'] = "About us"
+        context['text_on_page'] = (
+            "Our furniture is made using the finest materials and meets the highest quality standards.")
+        return context
