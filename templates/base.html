@@ -125,6 +125,23 @@
     <script src="{% static "deps/js/jquery/jquery-3.7.0.min.js" %}"></script>
     <script src="{% static "deps/js/jquery-ajax.js" %}"></script>
     <script src="{% static "deps/js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+    <script>
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function() {
+            var productId = this.getAttribute('data-product-id');
+            fetch(`/catalog/product/${productId}/like/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.nextElementSibling.innerText = data.likes;
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>

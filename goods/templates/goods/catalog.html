@@ -60,56 +60,55 @@
     {% endif %}
     {% endif %}
     {% for product in goods %}
-        <!-- Product Card -->
-        <div class="col-lg-4 col-md-6 p-4">
-            <div class="card border-primary rounded custom-shadow">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                {% else %}
-                    <img src="{% static "deps/images/Not found image.png" %}" class="card-img-top" alt="...">
-                {% endif %}
-                <div class="card-body">
-                    <a href="{% url "catalog:product" product.slug %}">
-                        <p class="card-title">
-                            {% autoescape off %}
-                                {% if product.headline %}
-                                {{product.headline}}
-                                {% else %}
-                                {{ product.name }}
-                                {% endif %}
-                            {% endautoescape %}
-                        </p>
-                    </a>
-                    <p class="card-text">
+    <!-- Product Card -->
+    <div class="col-lg-4 col-md-6 p-4">
+        <div class="card border-primary rounded custom-shadow">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            {% else %}
+                <img src="{% static "deps/images/Not found image.png" %}" class="card-img-top" alt="...">
+            {% endif %}
+            <div class="card-body">
+                <a href="{% url "goods:product" product.slug %}">
+                    <p class="card-title">
                         {% autoescape off %}
-                            {% if product.bodyline %}
-                            {{product.bodyline|truncatechars:100}}
+                            {% if product.headline %}
+                            {{product.headline}}
                             {% else %}
-                            {{ product.description|truncatechars:35 }}
+                            {{ product.name }}
                             {% endif %}
                         {% endautoescape %}
                     </p>
-                    <p class="product_id">id: {{ product.display_id }}</p>
-                    <div class="d-flex justify-content-between">
-
-                        {% if product.discount %}
-                            <p><s>{{product.price}}</s> $</p>
-                            <p><strong>{{ product.sell_price }} $</strong></p>
-                            <span class="badge bg-warning text-dark">Discount {{ product.discount }} %</span>
+                </a>
+                <p class="card-text">
+                    {% autoescape off %}
+                        {% if product.bodyline %}
+                        {{product.bodyline|truncatechars:100}}
                         {% else %}
-                            <p><strong>{{ product.price }} $</strong></p>
+                        {{ product.description|truncatechars:35 }}
                         {% endif %}
+                    {% endautoescape %}
+                </p>
+                <p class="product_id">id: {{ product.display_id }}</p>
+                <div class="d-flex justify-content-between">
+                    {% if product.discount %}
+                        <p><s>{{product.price}}</s> $</p>
+                        <p><strong>{{ product.sell_price }} $</strong></p>
+                        <span class="badge bg-warning text-dark">Discount {{ product.discount }} %</span>
+                    {% else %}
+                        <p><strong>{{ product.price }} $</strong></p>
+                    {% endif %}
 
-                        <a href="{% url "cart:cart_add" %}" class="btn add-to-cart"
-                        data-product-id="{{ product.id }}">
-                            {% csrf_token %}
-                            <img class="mx-1" src="{% static "deps/icons/cart-plus.svg" %}" alt="Catalog Icon"
-                                width="32" height="32">
-                        </a>
-                    </div>
+                    <a href="{% url "cart:cart_add" %}" class="btn add-to-cart" data-product-id="{{ product.id }}">
+                        {% csrf_token %}
+                        <img class="mx-1" src="{% static "deps/icons/cart-plus.svg" %}" alt="Catalog Icon" width="32" height="32">
+                    </a>
                 </div>
+                <button class="btn btn-primary like-button" data-product-id="{{ product.id }}">Like</button>
+                <span class="like-count">{{ product.likes }}</span> Likes
             </div>
         </div>
+    </div>
     {% endfor %}
 
 
@@ -151,3 +150,5 @@
     </div>
 </footer>
 {% endblock  %}
+
+

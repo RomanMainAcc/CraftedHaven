@@ -1,4 +1,7 @@
 from django.db import models
+from CraftedHaven import settings
+
+redis_instance = settings.redis_instance
 
 
 class Category(models.Model):
@@ -31,5 +34,11 @@ class Products(models.Model):
     def sell_price(self):
         if self.discount:
             return round(self.price - self.price * self.discount / 100, 2)
-
         return self.price
+
+    def like(self):
+        redis_instance.incr(f"product:{self.id}:likes")
+
+    def get_likes(self):
+        return int(redis_instance.get(f"product:{self.id}:likes") or 0)
+
