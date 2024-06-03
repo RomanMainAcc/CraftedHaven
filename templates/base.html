@@ -62,6 +62,11 @@
                                     <li><a class="dropdown-item  text-white" href="{% url 'user:users_cart' %}">Cart</a></li>
                                     <li><a class="dropdown-item  text-white" href="{% url "user:profile" %}">Profile</a>
                                     </li>
+                                    <li>
+                                    <a class="dropdown-item text-white" href="{% url 'goods:index' 'all'%}?liked_only=on&order_by=default">Liked goods</a>
+
+
+                                    </li>
                                     {% if user.is_admin or user.is_staff %}
                                         <li><a class="dropdown-item  text-white" href="{% url "admin:index" %}">Admin Panel</a></li>
                                     {% endif %}
