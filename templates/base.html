@@ -137,11 +137,16 @@
             })
             .then(response => response.json())
             .then(data => {
-                this.nextElementSibling.innerText = data.likes;
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    this.nextElementSibling.innerText = data.likes;
+                }
             });
         });
     });
     </script>
+
 </body>
 
 </html>

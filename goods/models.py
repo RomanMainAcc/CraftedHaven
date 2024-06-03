@@ -1,5 +1,6 @@
 from django.db import models
 from CraftedHaven import settings
+from users.models import User
 
 redis_instance = settings.redis_instance
 
@@ -36,9 +37,25 @@ class Products(models.Model):
             return round(self.price - self.price * self.discount / 100, 2)
         return self.price
 
-    def like(self):
+    def like(self, user):
+        LikedProduct.objects.create(user=user, product=self)
         redis_instance.incr(f"product:{self.id}:likes")
+
+    def unlike(self, user):
+        LikedProduct.objects.filter(user=user, product=self).delete()
+        redis_instance.decr(f"product:{self.id}:likes")
 
     def get_likes(self):
         return int(redis_instance.get(f"product:{self.id}:likes") or 0)
 
+
+class LikedProduct(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')
+
+    def __str__(self):
+        return f"{self.user} likes {self.product}"

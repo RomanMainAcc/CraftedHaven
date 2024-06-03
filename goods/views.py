@@ -3,7 +3,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.views import View
 from django.http import JsonResponse
 
-from goods.models import Products
+from goods.models import Products, LikedProduct
 from goods.utils import q_search
 
 
@@ -59,6 +59,13 @@ class LikeView(View):
 
     def post(self, request, product_id):
         product = get_object_or_404(Products, id=product_id)
-        product.like()
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'User not authenticated'}, status=403)
+
+        if LikedProduct.objects.filter(user=request.user, product=product).exists():
+            product.unlike(request.user)
+        else:
+            product.like(request.user)
+
         likes = product.get_likes()
         return JsonResponse({'likes': likes})
